@@ -3,251 +3,184 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PBI Contractors | Global Multi-Sector</title>
+<title>PBI Contractors | Global Industry Leader</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
 <style>
+:root { --gold: #f59e0b; --deep: #0a0a0c; --glass: rgba(255, 255, 255, 0.03); }
 body {
-font-family: 'Outfit', sans-serif;
-background: radial-gradient(circle at top right, #1e1b4b, #020617);
-color: #ffffff;
-min-height: 100vh;
+font-family: 'Space Grotesk', sans-serif;
+background-color: var(--deep);
+color: #fff;
 overflow-x: hidden;
 }
 
-.glass-card {
-background: rgba(255, 255, 255, 0.03);
-backdrop-filter: blur(20px);
-border: 1px solid rgba(255, 255, 255, 0.1);
-border-radius: 24px;
-transition: all 0.4s ease;
+h1, h2, .nav-item { font-family: 'Outfit', sans-serif; }
+
+/* Unified Sidebar Nav (Desktop & Mobile) */
+.side-nav {
+position: fixed; top: 0; left: 0; height: 100vh; width: 80px;
+background: rgba(0,0,0,0.8); border-right: 1px solid rgba(255,255,255,0.1);
+z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+gap: 2rem; transition: width 0.3s ease;
 }
-.glass-card:hover {
-border-color: #fbbf24;
-background: rgba(255, 255, 255, 0.07);
-transform: translateY(-5px);
+@media (max-width: 768px) { .side-nav { width: 60px; } }
+
+.nav-icon {
+font-size: 1.5rem; cursor: pointer; opacity: 0.5; transition: 0.3s;
+padding: 10px; border-radius: 12px;
 }
+.nav-icon:hover, .nav-icon.active { opacity: 1; background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
 
-.text-gradient {
-background: linear-gradient(90deg, #60a5fa, #f472b6, #fbbf24);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+/* Page Layout */
+.page-section { display: none; opacity: 0; min-height: 100vh; padding-left: 100px; padding-right: 20px; }
+@media (max-width: 768px) { .page-section { padding-left: 80px; } }
+.page-section.active { display: flex; flex-direction: column; justify-content: center; animation: pageIn 0.5s forwards; }
+@keyframes pageIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+/* New Homepage Style */
+.hero-title { font-size: clamp(3rem, 15vw, 12rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 900; text-transform: uppercase; }
+.gold-glow { color: var(--gold); text-shadow: 0 0 50px rgba(245, 158, 11, 0.3); }
+
+/* Form Styling (Submit Page) */
+.form-container {
+background: linear-gradient(145deg, #111115, #0a0a0c);
+border: 1px solid rgba(245, 158, 11, 0.2);
+box-shadow: 20px 20px 60px #050506, -20px -20px 60px #0f0f12;
+border-radius: 30px;
 }
-
-.page-section { display: none; opacity: 0; }
-.page-section.active { display: block; animation: slideUp 0.6s forwards; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-nav { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); }
-
 input, select, textarea {
-background: rgba(0, 0, 0, 0.3) !important;
-border: 1px solid rgba(255, 255, 255, 0.1) !important;
-color: white !important;
+background: rgba(255,255,255,0.02) !important;
+border: 1px solid rgba(255,255,255,0.1) !important;
+color: #fff !important;
+border-radius: 15px !important;
 }
+input:focus { border-color: var(--gold) !important; background: rgba(255,255,255,0.05) !important; }
 
-.btn-neon {
-background: linear-gradient(135deg, #fbbf24, #f59e0b);
-color: #000;
-font-weight: 900;
-padding: 18px 45px;
-border-radius: 50px;
-text-transform: uppercase;
-letter-spacing: 2px;
-box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+.btn-prime {
+background: var(--gold); color: #000; font-weight: 900; text-transform: uppercase;
+letter-spacing: 2px; border-radius: 15px; transition: 0.4s;
 }
-
-/* New Animated Accent */
-.neon-border { position: relative; overflow: hidden; }
-.neon-border::after {
-content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-background: #fbbf24; transition: width 0.4s;
-}
-.glass-card:hover .neon-border::after { width: 100%; }
+.btn-prime:hover { letter-spacing: 4px; box-shadow: 0 0 30px var(--gold); }
 </style>
 </head>
 <body>
 
-<nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] md:w-[70%] z-[100] px-8 py-4 flex justify-between items-center backdrop-blur-md rounded-full">
-<div class="text-xl font-black tracking-tighter text-white cursor-pointer" onclick="showPage('home')">PBI<span class="text-amber-400">.</span></div>
-<div class="hidden md:flex space-x-8 text-[11px] font-black uppercase tracking-[0.2em]">
-<a onclick="showPage('home')" class="hover:text-amber-400 cursor-pointer transition">Home</a>
-<a onclick="showPage('sectors')" class="hover:text-amber-400 cursor-pointer transition">Industries</a>
-<a onclick="showPage('careers')" class="hover:text-amber-400 cursor-pointer transition">Careers</a>
+<div class="side-nav">
+<div class="absolute top-6 font-black text-xl text-amber-500">PBI</div>
+<div class="nav-icon active" onclick="showPage('home')" title="Home">🏠</div>
+<div class="nav-icon" onclick="showPage('sectors')" title="Sectors">🏢</div>
+<div class="nav-icon" onclick="showPage('careers')" title="Careers">👷</div>
+<div class="nav-icon" onclick="showPage('project-intake')" title="Inquiry">✉️</div>
 </div>
-<button onclick="showPage('project-intake')" class="text-[10px] font-black uppercase text-amber-400 border border-amber-400/30 px-5 py-2 rounded-full hover:bg-amber-400 hover:text-black transition">Inquire</button>
-</nav>
 
-<main class="pt-40 pb-44 px-6 max-w-7xl mx-auto">
-
+<main>
 <section id="home" class="page-section active">
-<div class="grid lg:grid-cols-2 gap-12 items-center">
-<div>
-<h1 class="text-7xl md:text-9xl font-black leading-none mb-6 italic uppercase">THE <br> <span class="text-gradient">ZENITH.</span></h1>
-<p class="text-slate-400 text-lg md:text-xl max-w-lg leading-relaxed mb-8">Engineering global excellence across structural, medical, and digital landscapes.</p>
-<button onclick="toggleModal('applyModal', true)" class="btn-neon hover:scale-105 transition">Join The Network</button>
-</div>
-<div class="relative">
-<div class="absolute -inset-4 bg-amber-400/20 blur-3xl rounded-full"></div>
-<img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Building" class="rounded-3xl relative z-10 opacity-90 border border-white/10">
+<div class="max-w-6xl">
+<h2 class="text-xs font-bold uppercase tracking-[0.5em] text-gray-500 mb-4">PBI Global Multi-Contractors</h2>
+<h1 class="hero-title">LEAD<br><span class="gold-glow italic">BEYOND.</span></h1>
+<div class="flex flex-col md:flex-row gap-10 mt-12 items-start">
+<p class="text-gray-400 text-lg md:text-xl max-w-md border-l-2 border-amber-500 pl-6">
+Dominate structural, medical, and technological landscapes with unified infrastructure excellence.
+</p>
+<button onclick="toggleModal('applyModal', true)" class="btn-prime px-10 py-5">Get Started</button>
 </div>
 </div>
 </section>
 
 <section id="sectors" class="page-section">
-<div class="text-center mb-16">
-<h2 class="text-5xl font-black uppercase italic italic">Global <span class="text-amber-400 underline">Divisions</span></h2>
-<p class="text-slate-500 mt-4 tracking-widest text-sm font-bold uppercase">Multi-Sector Operational Mastery</p>
+<h2 class="text-4xl md:text-7xl font-black mb-12 uppercase italic">Industries</h2>
+<div class="grid md:grid-cols-2 gap-4 max-w-5xl">
+<div class="p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-amber-500 hover:text-black transition duration-500 group">
+<h3 class="text-3xl font-black mb-2 uppercase">Construction</h3>
+<p class="opacity-60 group-hover:opacity-100">Global Structural Engineering & Heavy Civil.</p>
 </div>
-
-<div class="grid md:grid-cols-2 gap-8">
-<div class="glass-card p-10 neon-border">
-<h3 class="text-3xl font-black mb-4 uppercase italic">01. Construction</h3>
-<p class="text-slate-400 mb-6">From high-rise structural engineering to massive civil infrastructure projects. We build the skeleton of modern cities.</p>
-<div class="flex flex-wrap gap-2">
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-amber-400">Structural</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-amber-400">Civil</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-amber-400">Industrial</span>
+<div class="p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-amber-500 hover:text-black transition duration-500 group">
+<h3 class="text-3xl font-black mb-2 uppercase">Medical</h3>
+<p class="opacity-60 group-hover:opacity-100">Bio-Tech Infrastructure & Supply Logistics.</p>
 </div>
+<div class="p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-amber-500 hover:text-black transition duration-500 group">
+<h3 class="text-3xl font-black mb-2 uppercase">Digital</h3>
+<p class="opacity-60 group-hover:opacity-100">Power BI Analytics & SEO Systems.</p>
 </div>
-<div class="glass-card p-10 neon-border">
-<h3 class="text-3xl font-black mb-4 uppercase italic">02. Medical Logistics</h3>
-<p class="text-slate-400 mb-6">Providing high-tier support for clinical infrastructure and medical supply chain optimization globally.</p>
-<div class="flex flex-wrap gap-2">
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-blue-400">Clinical</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-blue-400">Support</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-blue-400">Supply</span>
-</div>
-</div>
-<div class="glass-card p-10 neon-border">
-<h3 class="text-3xl font-black mb-4 uppercase italic text-gradient">03. Digital Systems</h3>
-<p class="text-slate-400 mb-6">Deploying Power BI analytics, SEO strategies, and cloud infrastructure to scale business intelligence.</p>
-<div class="flex flex-wrap gap-2">
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-pink-400">Analytics</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-pink-400">Strategy</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-pink-400">Cloud</span>
-</div>
-</div>
-<div class="glass-card p-10 neon-border">
-<h3 class="text-3xl font-black mb-4 uppercase italic">04. Global Marketing</h3>
-<p class="text-slate-400 mb-6">Aggressive brand positioning and digital performance marketing for high-growth conglomerates.</p>
-<div class="flex flex-wrap gap-2">
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-green-400">Scaling</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-green-400">Creative</span>
-<span class="bg-white/5 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-green-400">Media</span>
-</div>
+<div class="p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-amber-500 hover:text-black transition duration-500 group">
+<h3 class="text-3xl font-black mb-2 uppercase">Marketing</h3>
+<p class="opacity-60 group-hover:opacity-100">Enterprise Scale & Brand Intelligence.</p>
 </div>
 </div>
 </section>
 
 <section id="careers" class="page-section">
-<div class="text-center mb-16">
-<h2 class="text-5xl font-black uppercase italic italic">Active <span class="text-amber-400">Opportunities</span></h2>
-<p class="text-slate-500 mt-4 tracking-widest text-sm font-bold uppercase">Building the future workforce</p>
+<h2 class="text-4xl md:text-7xl font-black mb-12 uppercase italic">Join Force</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-6 rounded-2xl bg-zinc-900 border-l-4 border-amber-500">
+<h4 class="font-bold text-lg">Project Mgr</h4>
+<p class="text-[10px] uppercase tracking-widest text-gray-500 mb-4">Construction</p>
+<button onclick="toggleModal('applyModal', true)" class="text-amber-500 font-bold text-xs uppercase">Apply</button>
 </div>
-
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-<div class="glass-card p-6 border-l-2 border-amber-400">
-<h4 class="font-bold text-lg mb-1">Project Manager</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Construction Wing</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-amber-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
+<div class="p-6 rounded-2xl bg-zinc-900 border-l-4 border-amber-500">
+<h4 class="font-bold text-lg">Data Scientist</h4>
+<p class="text-[10px] uppercase tracking-widest text-gray-500 mb-4">Digital</p>
+<button onclick="toggleModal('applyModal', true)" class="text-amber-500 font-bold text-xs uppercase">Apply</button>
 </div>
-<div class="glass-card p-6 border-l-2 border-blue-400">
-<h4 class="font-bold text-lg mb-1">Medical Tech</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Healthcare Wing</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-blue-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
+<div class="p-6 rounded-2xl bg-zinc-900 border-l-4 border-amber-500">
+<h4 class="font-bold text-lg">Med Tech</h4>
+<p class="text-[10px] uppercase tracking-widest text-gray-500 mb-4">Healthcare</p>
+<button onclick="toggleModal('applyModal', true)" class="text-amber-500 font-bold text-xs uppercase">Apply</button>
 </div>
-<div class="glass-card p-6 border-l-2 border-pink-400">
-<h4 class="font-bold text-lg mb-1">Data Specialist</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Digital Systems</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-pink-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
-</div>
-<div class="glass-card p-6 border-l-2 border-green-400">
-<h4 class="font-bold text-lg mb-1">SEO Strategist</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Marketing Wing</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-green-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
-</div>
-<div class="glass-card p-6 border-l-2 border-amber-400">
-<h4 class="font-bold text-lg mb-1">Electrician</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Construction Wing</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-amber-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
-</div>
-<div class="glass-card p-6 border-l-2 border-slate-400">
-<h4 class="font-bold text-lg mb-1">Operations Mgr</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Logistics Wing</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-slate-200 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
-</div>
-<div class="glass-card p-6 border-l-2 border-pink-400">
-<h4 class="font-bold text-lg mb-1">Systems Admin</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">IT Support</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-pink-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
-</div>
-<div class="glass-card p-6 border-l-2 border-blue-400">
-<h4 class="font-bold text-lg mb-1">HR Coordinator</h4>
-<p class="text-[10px] text-slate-500 mb-4 uppercase font-black">Corporate Wing</p>
-<button onclick="toggleModal('applyModal', true)" class="text-[10px] text-blue-400 font-black uppercase tracking-widest hover:underline">Apply Now →</button>
+<div class="p-6 rounded-2xl bg-zinc-900 border-l-4 border-amber-500">
+<h4 class="font-bold text-lg">Field Ops</h4>
+<p class="text-[10px] uppercase tracking-widest text-gray-500 mb-4">Construction</p>
+<button onclick="toggleModal('applyModal', true)" class="text-amber-500 font-bold text-xs uppercase">Apply</button>
 </div>
 </div>
 </section>
 
 <section id="project-intake" class="page-section">
-<div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
-<div>
-<h2 class="text-5xl font-black uppercase mb-6 italic">START A <br> <span class="text-amber-400">PROJECT.</span></h2>
-<p class="text-slate-400 mb-10">Connect with our executive team to initiate large-scale contracting or infrastructure development.</p>
+<div class="max-w-4xl mx-auto w-full">
+<div class="mb-10">
+<h2 class="text-5xl md:text-7xl font-black uppercase gold-glow">Inquiry</h2>
+<p class="text-gray-500 font-bold tracking-widest">SUBMIT PROJECT PARAMETERS</p>
 </div>
-<div class="glass-card p-10">
-<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-4">
-<input type="text" name="Client" placeholder="Your Name" required class="w-full p-4 rounded-2xl outline-none">
-<textarea name="Brief" placeholder="Scope of inquiry..." class="w-full p-4 rounded-2xl h-32 outline-none"></textarea>
-<button type="submit" class="w-full bg-white text-black font-black py-4 rounded-2xl uppercase tracking-widest">Submit Proposal</button>
+<div class="form-container p-8 md:p-12">
+<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-6">
+<div class="grid md:grid-cols-2 gap-6">
+<input type="text" name="Business" placeholder="Business Identity" required class="w-full p-4">
+<input type="email" name="Email" placeholder="Contact Email" required class="w-full p-4">
+</div>
+<textarea name="Scope" placeholder="Describe project scale and objectives..." class="w-full p-4 h-32"></textarea>
+<button type="submit" class="w-full btn-prime py-5">Initiate Protocol</button>
 </form>
 </div>
 </div>
 </section>
-
 </main>
 
-<div id="applyModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
-<div class="glass-card bg-[#0a0a0a] w-full max-w-2xl p-10 relative overflow-y-auto max-h-[90vh] border-amber-400/50">
-<button onclick="toggleModal('applyModal', false)" class="absolute top-6 right-6 text-2xl hover:text-amber-400 transition">✕</button>
-<h2 class="text-3xl font-black uppercase italic mb-8">Personnel <span class="text-amber-400">Registry</span></h2>
-
-<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-6">
-<div class="grid md:grid-cols-2 gap-6">
-<input type="text" name="Full_Name" placeholder="Full Name" required class="w-full p-4 rounded-xl outline-none">
-<input type="tel" name="Phone" placeholder="Phone Number" required class="w-full p-4 rounded-xl outline-none">
+<div id="applyModal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center p-4 bg-black/95">
+<div class="form-container bg-black w-full max-w-2xl p-8 relative overflow-y-auto max-h-[90vh]">
+<button onclick="toggleModal('applyModal', false)" class="absolute top-6 right-6 text-3xl">✕</button>
+<h2 class="text-3xl font-black uppercase mb-8 gold-glow">Personnel Registry</h2>
+<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-4">
+<input type="text" name="Full_Name" placeholder="Full Name" required class="w-full p-3">
+<div class="grid md:grid-cols-2 gap-4">
+<input type="email" name="Email" placeholder="Email" required class="w-full p-3">
+<input type="tel" name="Phone" placeholder="Phone" required class="w-full p-3">
 </div>
-<input type="email" name="Email" placeholder="Email Address" required class="w-full p-4 rounded-xl outline-none">
-
-<div class="grid md:grid-cols-2 gap-6">
-<div class="space-y-1">
-<label class="text-[10px] font-black uppercase text-amber-400 ml-1">DL / State ID</label>
-<input type="text" name="ID_Number" placeholder="ID Number" required class="w-full p-4 rounded-xl outline-none">
+<div class="grid md:grid-cols-2 gap-4">
+<input type="text" name="ID_No" placeholder="ID Number" required class="w-full p-3">
+<input type="date" name="ID_Exp" required class="w-full p-3">
 </div>
-<div class="space-y-1">
-<label class="text-[10px] font-black uppercase text-amber-400 ml-1">Expiring Date</label>
-<input type="date" name="ID_Exp" required class="w-full p-4 rounded-xl outline-none">
-</div>
-</div>
-
-<div class="grid md:grid-cols-2 gap-6">
-<select name="Role" required class="w-full p-4 rounded-xl outline-none">
-<option value="" disabled selected>Select Role</option>
-<option>Project Manager</option><option>Medical Tech</option><option>Data Specialist</option>
-<option>SEO Strategist</option><option>Electrician</option><option>Operations Mgr</option>
+<div class="grid md:grid-cols-2 gap-4">
+<select name="Role" required class="w-full p-3 text-gray-400">
+<option value="" disabled selected>Role</option>
+<option>Project Mgr</option><option>Data Scientist</option><option>Other</option>
 </select>
-<select name="Preference" required class="w-full p-4 rounded-xl outline-none">
-<option value="" disabled selected>Work Setting</option>
-<option>On-Site (Lancaster, CA)</option><option>Remote</option><option>Hybrid</option>
+<select name="Type" required class="w-full p-3 text-gray-400">
+<option value="" disabled selected>Setting</option>
+<option>On-Site</option><option>Remote</option><option>Hybrid</option>
 </select>
 </div>
-
-<div class="p-4 bg-amber-400/10 rounded-xl border border-amber-400/20 flex items-center gap-4">
-<input type="checkbox" required class="w-5 h-5 accent-amber-400">
-<p class="text-[10px] font-black uppercase italic">Certify identity and bi-weekly pay terms.</p>
-</div>
-<button type="submit" class="w-full btn-neon">Submit Intake</button>
+<button type="submit" class="w-full btn-prime py-4 mt-4">Submit Credentials</button>
 </form>
 </div>
 </div>
@@ -263,12 +196,10 @@ s1.async=true; s1.src='https://embed.tawk.to/697f55b9fd3ee61c36a86deb/1jgcmdo0u'
 <script>
 function showPage(pageId) {
 document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-const target = document.getElementById(pageId);
-if(target) {
-target.classList.add('active');
-window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-toggleModal('applyModal', false);
+document.querySelectorAll('.nav-icon').forEach(i => i.classList.remove('active'));
+document.getElementById(pageId).classList.add('active');
+event.currentTarget.classList.add('active');
+window.scrollTo(0,0);
 }
 function toggleModal(id, show) {
 document.getElementById(id).classList.toggle('hidden', !show);
