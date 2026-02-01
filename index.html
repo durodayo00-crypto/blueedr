@@ -2,285 +2,204 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PBI Contractors</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>PBI Contractors | Global Multi-Sector Conglomerate</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Segoe UI,Arial,sans-serif;
-  background:#f4f6f9;
-  color:#1e1e1e;
-}
+body { font-family: 'Inter', sans-serif; background-color: #03060a; color: #F8F9FA; scroll-behavior: smooth; overflow-x: hidden; }
+h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: -0.03em; }
 
-nav{
-  background:#0b2c4d;
-  color:#fff;
-  padding:16px 24px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-nav strong{font-size:18px}
-nav a{
-  color:#fff;
-  text-decoration:none;
-  margin-left:18px;
-  font-weight:600;
-}
-nav a:hover{opacity:.8}
+/* Navigation & Transitions */
+.page-section { display: none; opacity: 0; transform: translateY(15px); transition: all 0.6s ease-out; }
+.page-section.active { display: block; opacity: 1; transform: translateY(0); }
 
-section{
-  display:none;
-  max-width:1200px;
-  margin:auto;
-  padding:60px 24px;
-  opacity:0;
-  transform:translateY(20px);
-  transition:all .4s ease;
-}
-section.active{
-  display:block;
-  opacity:1;
-  transform:translateY(0);
-}
+/* Fancy Glassmorphism */
+.glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2rem; overflow: hidden; }
+.amber-glow { text-shadow: 0 0 40px rgba(245, 158, 11, 0.5); }
 
-h1,h2,h3{color:#0b2c4d;margin-top:0}
+/* Faded Slide Show Marquee */
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.marquee-mask { mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
+.animate-marquee { display: flex; width: 200%; animation: marquee 35s linear infinite; }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:24px;
-  margin-top:30px;
-}
+/* Fixed Bottom Button */
+.fixed-join-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; }
+.btn-pulse { animation: pulse 2.5s infinite; transition: 0.3s; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); } 70% { box-shadow: 0 0 0 20px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
 
-.card{
-  background:#fff;
-  padding:26px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  transition:.3s;
-}
-.card:hover{transform:translateY(-4px)}
+/* Live Indicator */
+.live-dot { height: 8px; width: 8px; background-color: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: blink 1.5s infinite; }
+@keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-button{
-  background:#0b2c4d;
-  color:#fff;
-  border:none;
-  padding:14px 24px;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:15px;
-  transition:.3s;
-}
-button:hover{background:#123d6f}
+/* Style Date Input */
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
 
-footer{
-  background:#0b2c4d;
-  color:#fff;
-  text-align:center;
-  padding:28px;
-}
-
-@keyframes fade{from{opacity:0}to{opacity:1}}
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  align-items:center;
-  justify-content:center;
-  z-index:2000;
-  animation:fade .3s ease;
-}
-
-.modal form{
-  background:#fff;
-  width:95%;
-  max-width:520px;
-  padding:30px;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-  transform:translateY(-20px);
-  animation:fade 0.3s ease, slideUp 0.3s ease;
-}
-
-@keyframes slideUp{from{transform:translateY(20px)}to{transform:translateY(0)}}
-
-.modal h3{margin-bottom:10px}
-
-.modal input,.modal select{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-
-.modal-actions{
-  display:flex;
-  gap:12px;
-  margin-top:15px;
-}
-.modal-actions button:last-child{
-  background:#777;
-}
-
-/* Floating Apply Button */
-#applyBtn{
-  position:fixed;
-  bottom:30px;
-  right:30px;
-  background:#fcb72b;
-  color:#fff;
-  border:none;
-  padding:16px 22px;
-  border-radius:50px;
-  font-size:16px;
-  font-weight:600;
-  box-shadow:0 10px 20px rgba(0,0,0,.2);
-  cursor:pointer;
-  z-index:1500;
-  animation:pulse 2s infinite;
-  transition:.3s;
-}
-#applyBtn:hover{
-  transform:scale(1.1);
-  background:#fbb034;
-}
-
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(252,183,43,.4);}
-  50%{box-shadow:0 0 0 15px rgba(252,183,43,0);}
-}
+/* Custom Scrollbar for Modal */
+.modal-scroll::-webkit-scrollbar { width: 4px; }
+.modal-scroll::-webkit-scrollbar-track { background: transparent; }
+.modal-scroll::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 10px; }
 </style>
 </head>
-
 <body>
 
-<nav>
-  <strong>PBI Contractors</strong>
-  <div>
-    <a href="#home" onclick="go('home')">Home</a>
-    <a href="#about" onclick="go('about')">About</a>
-    <a href="#services" onclick="go('services')">Services</a>
-    <a href="#careers" onclick="go('careers')">Careers</a>
-    <a href="#contact" onclick="go('contact')">Contact</a>
-  </div>
+<nav class="fixed top-0 left-0 w-full z-50 glass rounded-none border-x-0 border-t-0 px-10 py-6 flex justify-between items-center bg-black/40">
+<div class="text-2xl font-black text-amber-500 tracking-tighter cursor-pointer" onclick="showPage('home')">PBI</div>
+<div class="hidden md:flex space-x-10 text-[10px] font-black tracking-widest uppercase">
+<a onclick="showPage('home')" class="hover:text-amber-500 cursor-pointer">Home</a>
+<a onclick="showPage('sectors')" class="hover:text-amber-500 cursor-pointer">Explore Fields</a>
+<a onclick="showPage('careers')" class="hover:text-amber-500 cursor-pointer">Careers</a>
+<a onclick="showPage('project-intake')" class="text-amber-500 cursor-pointer">Start Project</a>
+</div>
 </nav>
 
-<section id="home" class="active">
-  <h1>The Multi-Industry Standard</h1>
-  <p>Innovation in every field. Excellence in every work.</p>
-  <div class="grid">
-    <div class="card">Construction & Engineering</div>
-    <div class="card">Medical & Healthcare</div>
-    <div class="card">Technology & IT</div>
-    <div class="card">Marketing & Creative</div>
-  </div>
-</section>
-
-<section id="about">
-  <h2>About PBI Contractors</h2>
-  <p>
-    PBI Contractors has evolved from a construction-focused firm into a
-    global multi-sector solutions provider, delivering excellence across
-    engineering, healthcare, logistics, technology, and professional services.
-  </p>
-</section>
-
-<section id="services">
-  <h2>Our Services</h2>
-  <div class="grid">
-    <div class="card">High-Rise & Civil Construction</div>
-    <div class="card">Hospital & Medical Facility Support</div>
-    <div class="card">Retail & E-Commerce Infrastructure</div>
-    <div class="card">Cloud, Cybersecurity & Software</div>
-    <div class="card">Energy & Sustainability</div>
-    <div class="card">Logistics & Transportation</div>
-  </div>
-</section>
-
-<section id="careers">
-  <h2>Careers</h2>
-  <p>Remote and On-Site opportunities available across multiple industries.</p>
-  <button onclick="openJob()">Apply for a Job</button>
-</section>
-
-<section id="contact">
-  <h2>Contact</h2>
-  <p>📍 44433 Fern Avenue, Lancaster, CA 93534</p>
-  <p>📞 (818) 625-8794</p>
-  <iframe
-    src="https://maps.google.com/maps?q=44433%20Fern%20Avenue%20Lancaster%20CA&t=&z=15&ie=UTF8&iwloc=&output=embed"
-    style="width:100%;height:320px;border:0;border-radius:12px">
-  </iframe>
-</section>
-
-<footer>
-  © 2026 PBI Contractors
-</footer>
-
-<!-- Floating Apply Button -->
-<button id="applyBtn" onclick="openJob()">Apply Now</button>
-
-<!-- JOB APPLICATION MODAL -->
-<div id="jobModal" class="modal">
-  <form action="https://formspree.io/f/mwvqvnqz" method="POST">
-    <h3>Job Application</h3>
-
-    <input name="Full Name" required placeholder="Full Name">
-    <input name="Email" type="email" required placeholder="Email">
-    <input name="Phone" required placeholder="Phone Number">
-
-    <select name="Job Role" required>
-      <option value="">Select Job Role</option>
-      <option>Project Superintendent</option>
-      <option>Medical Technician</option>
-      <option>Electrician / HVAC</option>
-      <option>Software Developer (Remote)</option>
-      <option>Digital Marketing Specialist</option>
-      <option>Logistics / Fleet Driver</option>
-    </select>
-
-    <input name="ID Number" required placeholder="Driver License / ID Number (USA)">
-    <input name="ID Expiration Date" type="date" required>
-
-    <div class="modal-actions">
-      <button type="submit">Submit Application</button>
-      <button type="button" onclick="closeJob()">Cancel</button>
-    </div>
-  </form>
+<div class="fixed-join-container">
+<button onclick="toggleModal('applyModal', true)" class="bg-amber-500 text-black font-black py-4 px-12 rounded-full btn-pulse hover:scale-110 shadow-2xl uppercase tracking-widest text-sm transition">
+Join Our Team
+</button>
 </div>
 
-<script>
-function go(id){
-  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  window.scrollTo(0,0);
-}
-function openJob(){jobModal.style.display="flex"}
-function closeJob(){jobModal.style.display="none"}
-</script>
+<main class="pt-40 pb-40 px-6 max-w-7xl mx-auto">
 
-<!-- Tawk.to Chat Widget -->
+<section id="home" class="page-section active">
+<div class="text-center mb-24">
+<h1 class="text-6xl md:text-9xl font-black mb-6 amber-glow leading-tight italic">Unified<br><span class="text-amber-500">Excellence.</span></h1>
+<p class="text-gray-500 max-w-xl mx-auto mb-12 uppercase tracking-[0.4em] text-xs">The Blueprint for Global Industry Mastery</p>
+<div class="flex flex-wrap justify-center gap-6">
+<button onclick="showPage('project-intake')" class="bg-white text-black font-black py-5 px-14 rounded-2xl hover:bg-amber-500 transition shadow-2xl">START A PROJECT</button>
+<button onclick="showPage('sectors')" class="border border-white/10 font-black py-5 px-14 rounded-2xl hover:bg-white/5 transition">EXPLORE FIELDS</button>
+</div>
+</div>
+
+<div class="marquee-mask py-12 border-y border-white/5 bg-white/[0.01] overflow-hidden">
+<div class="animate-marquee space-x-20 text-gray-500 font-black text-xl italic opacity-30 uppercase">
+<span>Structural Engineering</span> <span>Biomedical Support</span> <span>Data Visualisation</span> <span>SEO Strategy</span>
+<span>Global Logistics</span> <span>E-Commerce Infrastructure</span> <span>Commercial Real Estate</span> <span>Cloud Security</span>
+<span>Structural Engineering</span> <span>Biomedical Support</span> <span>Data Visualisation</span> <span>SEO Strategy</span>
+</div>
+</div>
+</section>
+
+<section id="sectors" class="page-section">
+<h2 class="text-4xl font-black text-center mb-16 italic uppercase text-amber-500">Industry Fields</h2>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="glass p-10 border-t-2 border-amber-500"><h4>Construction</h4></div>
+<div class="glass p-10 border-t-2 border-white/10"><h4>Medical</h4></div>
+<div class="glass p-10 border-t-2 border-amber-500"><h4>Marketing</h4></div>
+<div class="glass p-10 border-t-2 border-white/10"><h4>Technology</h4></div>
+</div>
+</section>
+
+<section id="careers" class="page-section">
+<h2 class="text-4xl font-black text-center mb-16 italic uppercase">Active <span class="text-amber-500">Roles</span></h2>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Project Manager</p></div><span class="opacity-20 font-black">01</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Medical Tech</p></div><span class="opacity-20 font-black">02</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>SEO Specialist</p></div><span class="opacity-20 font-black">03</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Data Analyst</p></div><span class="opacity-20 font-black">04</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Electrician</p></div><span class="opacity-20 font-black">05</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>IT Support</p></div><span class="opacity-20 font-black">06</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Operations Mgr</p></div><span class="opacity-20 font-black">07</span></div>
+<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>HR Coordinator</p></div><span class="opacity-20 font-black">08</span></div>
+</div>
+</section>
+
+<section id="project-intake" class="page-section">
+<div class="glass p-12 max-w-2xl mx-auto border-t-8 border-amber-500 shadow-2xl">
+<h2 class="text-3xl font-black mb-8 uppercase">Initiate Project</h2>
+<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-6">
+<input type="text" name="Client" placeholder="Name / Business" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white outline-none">
+<textarea name="Brief" placeholder="Project goals and requirements..." class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl h-40 outline-none"></textarea>
+<button type="submit" class="w-full bg-amber-500 text-black font-black py-5 rounded-2xl uppercase">Submit Proposal</button>
+</form>
+</div>
+</section>
+
+</main>
+
+<div id="applyModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
+<div class="glass bg-[#05080F] w-full max-w-2xl p-8 relative overflow-y-auto max-h-[90vh] border-amber-500/30 modal-scroll">
+<button onclick="toggleModal('applyModal', false)" class="absolute top-6 right-6 text-2xl text-gray-500 hover:text-white transition">✕</button>
+<h2 class="text-3xl font-black text-amber-500 mb-2 uppercase italic tracking-tighter">Application </Form></h2>
+<p class="text-gray-500 text-[10px] font-black tracking-[0.3em] uppercase mb-8">Official Registry</p>
+
+<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-5 text-left">
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Full Legal Name</label>
+<input type="text" name="Full_Name" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+</div>
+
+<div class="grid md:grid-cols-2 gap-5">
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Email Address</label>
+<input type="email" name="Email" placeholder="your@email.com" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+</div>
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Phone Number</label>
+<input type="tel" name="Phone" placeholder="Mobile #" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+</div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-5">
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">DL / State ID Number</label>
+<input type="text" name="ID_Number" placeholder="Identification #" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+</div>
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Expiring Date</label>
+<input type="date" name="Exp_Date" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+</div>
+</div>
+
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Position / Role</label>
+<select name="Job_Role" required class="w-full bg-black border border-white/10 p-4 rounded-xl text-gray-400 outline-none focus:border-amber-500">
+<option value="" disabled selected>Pick a Role</option>
+<option>Project Manager</option><option>Medical Technician</option><option>SEO Specialist</option>
+<option>Data Analyst</option><option>Electrician</option><option>IT Support</option>
+<option>Operations Manager</option><option>HR Coordinator</option>
+</select>
+</div>
+
+<div class="space-y-1">
+<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Work Type</label>
+<select name="Work_Type" required class="w-full bg-black border border-white/10 p-4 rounded-xl text-gray-400 outline-none focus:border-amber-500">
+<option value="" disabled selected>Select Preference</option>
+<option value="On-Site">On-Site (Lancaster, CA)</option>
+<option value="Remote">Remote</option>
+<option value="Hybrid">Hybrid</option>
+</select>
+</div>
+
+<div class="p-5 bg-amber-500/5 border border-amber-500/20 rounded-2xl flex items-center space-x-4">
+<input type="checkbox" required class="w-6 h-6 accent-amber-500">
+<p class="text-[10px] text-amber-500 font-black uppercase italic leading-tight">I verify my data and accept bi-weekly payroll terms.</p>
+</div>
+
+<button type="submit" class="w-full bg-amber-500 text-black font-black py-5 rounded-2xl uppercase tracking-widest text-lg shadow-2xl transition hover:scale-105">Submit Application</button>
+</form>
+</div>
+</div>
+
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/697f55b9fd3ee61c36a86deb/1jgcmdo0u';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
+s1.async=true; s1.src='https://embed.tawk.to/697f55b9fd3ee61c36a86deb/1jgcmdo0u'; s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 
+<script>
+function showPage(pageId) {
+document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+const target = document.getElementById(pageId);
+if(target) { setTimeout(() => { target.classList.add('active'); window.scrollTo(0,0); }, 50); }
+toggleModal('applyModal', false);
+}
+function toggleModal(id, show) {
+document.getElementById(id).classList.toggle('hidden', !show);
+document.body.style.overflow = show ? 'hidden' : 'auto';
+}
+</script>
 </body>
 </html>
