@@ -3,199 +3,195 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PBI Contractors | Global Multi-Sector Conglomerate</title>
+<title>PBI Contractors | Global Portal</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
 <style>
 body { font-family: 'Inter', sans-serif; background-color: #03060a; color: #F8F9FA; scroll-behavior: smooth; overflow-x: hidden; }
 h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: -0.03em; }
 
-/* Navigation & Transitions */
 .page-section { display: none; opacity: 0; transform: translateY(15px); transition: all 0.6s ease-out; }
 .page-section.active { display: block; opacity: 1; transform: translateY(0); }
 
-/* Fancy Glassmorphism */
 .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2rem; overflow: hidden; }
 .amber-glow { text-shadow: 0 0 40px rgba(245, 158, 11, 0.5); }
 
-/* Faded Slide Show Marquee */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .marquee-mask { mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
 .animate-marquee { display: flex; width: 200%; animation: marquee 35s linear infinite; }
 
-/* Fixed Bottom Button */
-.fixed-join-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; }
-.btn-pulse { animation: pulse 2.5s infinite; transition: 0.3s; }
+.fixed-join-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 90; }
+.btn-pulse { animation: pulse 2.5s infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); } 70% { box-shadow: 0 0 0 20px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
 
-/* Live Indicator */
 .live-dot { height: 8px; width: 8px; background-color: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: blink 1.5s infinite; }
 @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-/* Style Date Input */
-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
+/* Mobile Nav Styling */
+#mobile-menu { transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(-100%); }
+#mobile-menu.open { transform: translateY(0); }
 
-/* Custom Scrollbar for Modal */
-.modal-scroll::-webkit-scrollbar { width: 4px; }
-.modal-scroll::-webkit-scrollbar-track { background: transparent; }
-.modal-scroll::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 10px; }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; }
 </style>
 </head>
 <body>
 
-<nav class="fixed top-0 left-0 w-full z-50 glass rounded-none border-x-0 border-t-0 px-10 py-6 flex justify-between items-center bg-black/40">
+<nav class="fixed top-0 left-0 w-full z-[100] glass rounded-none border-x-0 border-t-0 px-6 md:px-10 py-5 flex justify-between items-center bg-black/80">
 <div class="text-2xl font-black text-amber-500 tracking-tighter cursor-pointer" onclick="showPage('home')">PBI</div>
+
 <div class="hidden md:flex space-x-10 text-[10px] font-black tracking-widest uppercase">
 <a onclick="showPage('home')" class="hover:text-amber-500 cursor-pointer">Home</a>
-<a onclick="showPage('sectors')" class="hover:text-amber-500 cursor-pointer">Explore Fields</a>
+<a onclick="showPage('sectors')" class="hover:text-amber-500 cursor-pointer">Fields</a>
 <a onclick="showPage('careers')" class="hover:text-amber-500 cursor-pointer">Careers</a>
 <a onclick="showPage('project-intake')" class="text-amber-500 cursor-pointer">Start Project</a>
 </div>
+
+<div class="md:hidden text-amber-500 text-2xl cursor-pointer" onclick="toggleMobileMenu()">
+<span id="menu-icon">☰</span>
+</div>
 </nav>
 
+<div id="mobile-menu" class="fixed top-0 left-0 w-full bg-black/95 z-[99] pt-24 pb-10 flex flex-col items-center space-y-6 md:hidden glass rounded-none">
+<a onclick="toggleMobileMenu(); showPage('home')" class="text-lg font-black uppercase tracking-widest">Home</a>
+<a onclick="toggleMobileMenu(); showPage('sectors')" class="text-lg font-black uppercase tracking-widest">Fields</a>
+<a onclick="toggleMobileMenu(); showPage('careers')" class="text-lg font-black uppercase tracking-widest">Careers</a>
+<a onclick="toggleMobileMenu(); showPage('project-intake')" class="text-lg font-black uppercase tracking-widest text-amber-500">Start Project</a>
+</div>
+
 <div class="fixed-join-container">
-<button onclick="toggleModal('applyModal', true)" class="bg-amber-500 text-black font-black py-4 px-12 rounded-full btn-pulse hover:scale-110 shadow-2xl uppercase tracking-widest text-sm transition">
+<button onclick="toggleModal('applyModal', true)" class="bg-amber-500 text-black font-black py-4 px-10 rounded-full btn-pulse hover:scale-105 shadow-2xl uppercase tracking-widest text-[12px] transition">
 Join Our Team
 </button>
 </div>
 
-<main class="pt-40 pb-40 px-6 max-w-7xl mx-auto">
+<main class="pt-32 pb-40 px-6 max-w-7xl mx-auto">
 
 <section id="home" class="page-section active">
-<div class="text-center mb-24">
-<h1 class="text-6xl md:text-9xl font-black mb-6 amber-glow leading-tight italic">Unified<br><span class="text-amber-500">Excellence.</span></h1>
-<p class="text-gray-500 max-w-xl mx-auto mb-12 uppercase tracking-[0.4em] text-xs">The Blueprint for Global Industry Mastery</p>
-<div class="flex flex-wrap justify-center gap-6">
-<button onclick="showPage('project-intake')" class="bg-white text-black font-black py-5 px-14 rounded-2xl hover:bg-amber-500 transition shadow-2xl">START A PROJECT</button>
-<button onclick="showPage('sectors')" class="border border-white/10 font-black py-5 px-14 rounded-2xl hover:bg-white/5 transition">EXPLORE FIELDS</button>
+<div class="text-center mb-16">
+<h1 class="text-5xl md:text-9xl font-black mb-6 amber-glow leading-tight italic">Unified<br><span class="text-amber-500">Excellence.</span></h1>
+<p class="text-gray-500 max-w-xl mx-auto mb-10 uppercase tracking-[0.2em] text-[10px] md:text-xs">Global Industry Mastery</p>
+<div class="flex flex-col md:flex-row justify-center gap-4">
+<button onclick="showPage('project-intake')" class="bg-white text-black font-black py-4 px-10 rounded-2xl">START A PROJECT</button>
+<button onclick="showPage('sectors')" class="border border-white/10 font-black py-4 px-10 rounded-2xl bg-white/5">EXPLORE FIELDS</button>
 </div>
 </div>
 
-<div class="marquee-mask py-12 border-y border-white/5 bg-white/[0.01] overflow-hidden">
-<div class="animate-marquee space-x-20 text-gray-500 font-black text-xl italic opacity-30 uppercase">
-<span>Structural Engineering</span> <span>Biomedical Support</span> <span>Data Visualisation</span> <span>SEO Strategy</span>
-<span>Global Logistics</span> <span>E-Commerce Infrastructure</span> <span>Commercial Real Estate</span> <span>Cloud Security</span>
-<span>Structural Engineering</span> <span>Biomedical Support</span> <span>Data Visualisation</span> <span>SEO Strategy</span>
+<div class="marquee-mask py-8 border-y border-white/5 bg-white/[0.01] overflow-hidden">
+<div class="animate-marquee space-x-12 text-gray-500 font-black text-sm md:text-xl italic opacity-30 uppercase">
+<span>Structural Engineering</span> <span>Biomedical Support</span> <span>Data Visualisation</span> <span>SEO Strategy</span> <span>Global Logistics</span>
 </div>
 </div>
 </section>
 
 <section id="sectors" class="page-section">
-<h2 class="text-4xl font-black text-center mb-16 italic uppercase text-amber-500">Industry Fields</h2>
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="glass p-10 border-t-2 border-amber-500"><h4>Construction</h4></div>
-<div class="glass p-10 border-t-2 border-white/10"><h4>Medical</h4></div>
-<div class="glass p-10 border-t-2 border-amber-500"><h4>Marketing</h4></div>
-<div class="glass p-10 border-t-2 border-white/10"><h4>Technology</h4></div>
+<h2 class="text-3xl font-black text-center mb-12 italic uppercase text-amber-500">Industry Fields</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="glass p-8 border-t-2 border-amber-500 text-center"><h4>Construction</h4></div>
+<div class="glass p-8 border-t-2 border-white/10 text-center"><h4>Medical</h4></div>
+<div class="glass p-8 border-t-2 border-amber-500 text-center"><h4>Marketing</h4></div>
+<div class="glass p-8 border-t-2 border-white/10 text-center"><h4>Technology</h4></div>
 </div>
 </section>
 
 <section id="careers" class="page-section">
-<h2 class="text-4xl font-black text-center mb-16 italic uppercase">Active <span class="text-amber-500">Roles</span></h2>
-<div class="grid md:grid-cols-2 gap-4">
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Project Manager</p></div><span class="opacity-20 font-black">01</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Medical Tech</p></div><span class="opacity-20 font-black">02</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>SEO Specialist</p></div><span class="opacity-20 font-black">03</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Data Analyst</p></div><span class="opacity-20 font-black">04</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Electrician</p></div><span class="opacity-20 font-black">05</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>IT Support</p></div><span class="opacity-20 font-black">06</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>Operations Mgr</p></div><span class="opacity-20 font-black">07</span></div>
-<div class="glass p-6 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p>HR Coordinator</p></div><span class="opacity-20 font-black">08</span></div>
+<h2 class="text-3xl font-black text-center mb-12 italic uppercase">Active <span class="text-amber-500">Roles</span></h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div class="glass p-5 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p class="text-sm">Project Manager</p></div><span class="opacity-10 font-black">01</span></div>
+<div class="glass p-5 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p class="text-sm">Medical Tech</p></div><span class="opacity-10 font-black">02</span></div>
+<div class="glass p-5 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p class="text-sm">SEO Specialist</p></div><span class="opacity-10 font-black">03</span></div>
+<div class="glass p-5 flex items-center justify-between"><div class="flex items-center gap-3"><span class="live-dot"></span><p class="text-sm">Data Analyst</p></div><span class="opacity-10 font-black">04</span></div>
 </div>
 </section>
 
 <section id="project-intake" class="page-section">
-<div class="glass p-12 max-w-2xl mx-auto border-t-8 border-amber-500 shadow-2xl">
-<h2 class="text-3xl font-black mb-8 uppercase">Initiate Project</h2>
-<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-6">
-<input type="text" name="Client" placeholder="Name / Business" required class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white outline-none">
-<textarea name="Brief" placeholder="Project goals and requirements..." class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl h-40 outline-none"></textarea>
-<button type="submit" class="w-full bg-amber-500 text-black font-black py-5 rounded-2xl uppercase">Submit Proposal</button>
+<div class="glass p-8 max-w-2xl mx-auto border-t-8 border-amber-500">
+<h2 class="text-2xl font-black mb-6 uppercase">Initiate Project</h2>
+<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-4">
+<input type="text" name="Client" placeholder="Name / Business" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none">
+<textarea name="Brief" placeholder="Requirements..." class="w-full bg-white/5 border border-white/10 p-4 rounded-xl h-32 outline-none"></textarea>
+<button type="submit" class="w-full bg-amber-500 text-black font-black py-4 rounded-xl uppercase">Submit</button>
 </form>
 </div>
 </section>
 
 </main>
 
-<div id="applyModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
-<div class="glass bg-[#05080F] w-full max-w-2xl p-8 relative overflow-y-auto max-h-[90vh] border-amber-500/30 modal-scroll">
-<button onclick="toggleModal('applyModal', false)" class="absolute top-6 right-6 text-2xl text-gray-500 hover:text-white transition">✕</button>
-<h2 class="text-3xl font-black text-amber-500 mb-2 uppercase italic tracking-tighter">Application </Form></h2>
-<p class="text-gray-500 text-[10px] font-black tracking-[0.3em] uppercase mb-8">Official Registry</p>
+<div id="applyModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
+<div class="glass bg-[#05080F] w-full max-w-2xl p-6 md:p-10 relative overflow-y-auto max-h-[90vh] border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.1)]">
+<button onclick="toggleModal('applyModal', false)" class="absolute top-4 right-4 text-2xl text-gray-500">✕</button>
+<h2 class="text-2xl font-black text-amber-500 mb-1 uppercase italic">Personnel Intake</h2>
+<p class="text-gray-500 text-[10px] font-black tracking-widest uppercase mb-6 border-b border-white/5 pb-2">Hiring Wing</p>
 
-<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-5 text-left">
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Full Legal Name</label>
-<input type="text" name="Full_Name" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
-</div>
-
-<div class="grid md:grid-cols-2 gap-5">
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Email Address</label>
-<input type="email" name="Email" placeholder="your@email.com" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
-</div>
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Phone Number</label>
-<input type="tel" name="Phone" placeholder="Mobile #" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
-</div>
+<form action="https://formspree.io/f/mwvqvnqz" method="POST" class="space-y-4">
+<div>
+<label class="text-[9px] text-amber-500 font-bold uppercase ml-1">Full Name</label>
+<input type="text" name="Full_Name" placeholder="Legal Name" required class="w-full bg-white/5 border border-white/10 p-3.5 rounded-xl text-white outline-none focus:border-amber-500">
 </div>
 
-<div class="grid md:grid-cols-2 gap-5">
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">DL / State ID Number</label>
-<input type="text" name="ID_Number" placeholder="Identification #" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="text-[9px] text-amber-500 font-bold uppercase ml-1">Email</label>
+<input type="email" name="Email" placeholder="your@email.com" required class="w-full bg-white/5 border border-white/10 p-3.5 rounded-xl text-white outline-none">
 </div>
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Expiring Date</label>
-<input type="date" name="Exp_Date" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-amber-500 transition">
+<div>
+<label class="text-[9px] text-amber-500 font-bold uppercase ml-1">Phone</label>
+<input type="tel" name="Phone" placeholder="Mobile #" required class="w-full bg-white/5 border border-white/10 p-3.5 rounded-xl text-white outline-none">
 </div>
 </div>
 
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Position / Role</label>
-<select name="Job_Role" required class="w-full bg-black border border-white/10 p-4 rounded-xl text-gray-400 outline-none focus:border-amber-500">
-<option value="" disabled selected>Pick a Role</option>
-<option>Project Manager</option><option>Medical Technician</option><option>SEO Specialist</option>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="text-[9px] text-amber-500 font-bold uppercase ml-1">DL / State ID</label>
+<input type="text" name="ID_Number" placeholder="ID Number" required class="w-full bg-white/5 border border-white/10 p-3.5 rounded-xl text-white outline-none">
+</div>
+<div>
+<label class="text-[9px] text-amber-500 font-bold uppercase ml-1">Expiring Date</label>
+<input type="date" name="ID_Exp" required class="w-full bg-white/5 border border-white/10 p-3.5 rounded-xl text-white outline-none">
+</div>
+</div>
+
+<div>
+<label class="text-[9px] text-amber-500 font-bold uppercase ml-1">Role & Location Preference</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<select name="Role" required class="w-full bg-black border border-white/10 p-3.5 rounded-xl text-gray-400 outline-none">
+<option value="" disabled selected>Select Role</option>
+<option>Project Manager</option><option>Medical Tech</option><option>SEO Specialist</option>
 <option>Data Analyst</option><option>Electrician</option><option>IT Support</option>
-<option>Operations Manager</option><option>HR Coordinator</option>
+</select>
+<select name="Work_Type" required class="w-full bg-black border border-white/10 p-3.5 rounded-xl text-gray-400 outline-none">
+<option value="" disabled selected>On-site / Remote / Hybrid</option>
+<option>On-Site (Lancaster, CA)</option><option>Remote</option><option>Hybrid</option>
 </select>
 </div>
-
-<div class="space-y-1">
-<label class="text-[10px] text-amber-500 font-bold uppercase ml-1">Work Type</label>
-<select name="Work_Type" required class="w-full bg-black border border-white/10 p-4 rounded-xl text-gray-400 outline-none focus:border-amber-500">
-<option value="" disabled selected>Select Preference</option>
-<option value="On-Site">On-Site (Lancaster, CA)</option>
-<option value="Remote">Remote</option>
-<option value="Hybrid">Hybrid</option>
-</select>
 </div>
 
-<div class="p-5 bg-amber-500/5 border border-amber-500/20 rounded-2xl flex items-center space-x-4">
-<input type="checkbox" required class="w-6 h-6 accent-amber-500">
-<p class="text-[10px] text-amber-500 font-black uppercase italic leading-tight">I verify my data and accept bi-weekly payroll terms.</p>
+<div class="p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl flex items-center gap-3">
+<input type="checkbox" required class="accent-amber-500 w-5 h-5">
+<p class="text-[9px] text-amber-500 font-bold uppercase italic">I certify my identity data and accept bi-weekly pay terms.</p>
 </div>
 
-<button type="submit" class="w-full bg-amber-500 text-black font-black py-5 rounded-2xl uppercase tracking-widest text-lg shadow-2xl transition hover:scale-105">Submit Application</button>
+<button type="submit" class="w-full bg-amber-500 text-black font-black py-4 rounded-xl uppercase tracking-widest shadow-2xl">Submit Application</button>
 </form>
 </div>
 </div>
 
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true; s1.src='https://embed.tawk.to/697f55b9fd3ee61c36a86deb/1jgcmdo0u'; s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-
 <script>
+function toggleMobileMenu() {
+const menu = document.getElementById('mobile-menu');
+const icon = document.getElementById('menu-icon');
+menu.classList.toggle('open');
+icon.innerText = menu.classList.contains('open') ? '✕' : '☰';
+}
+
 function showPage(pageId) {
 document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
 const target = document.getElementById(pageId);
-if(target) { setTimeout(() => { target.classList.add('active'); window.scrollTo(0,0); }, 50); }
+if(target) {
+setTimeout(() => { target.classList.add('active'); window.scrollTo(0,0); }, 50);
+}
 toggleModal('applyModal', false);
 }
+
 function toggleModal(id, show) {
 document.getElementById(id).classList.toggle('hidden', !show);
 document.body.style.overflow = show ? 'hidden' : 'auto';
